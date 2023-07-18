@@ -1,0 +1,57 @@
+﻿<Window x:Class="KutuphaneDeneme1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KutuphaneDeneme1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="tbName"  Grid.Row="0" Grid.Column="1" Height="20" VerticalAlignment="Top" Margin="5,5,5,0" Text="Kitap İsmi:" FontSize="16"/>
+        <TextBlock Name ="tbAuthor" Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Top" Margin="5,5,5,0" Text="Yazar:" FontSize="16"/>
+        <TextBlock Name="tbKonu" Grid.Row="2" Grid.Column="1" Height="20" VerticalAlignment="Top" Margin="5,5,5,0" Text="Konu:" FontSize="16"/>
+        <TextBlock Name ="tbISBN" Grid.Row="4" Grid.Column="1" Height="20" VerticalAlignment="Top" Margin="5,5,5,0" Text="ISBN:" FontSize="16"/>
+        <TextBox Name="txtName" Grid.Row="0" Grid.Column="1" Margin="0,25,5,80" FontSize="16" Grid.RowSpan="2"/>
+        <TextBox Name="txtAuthor" Grid.Row="1" Grid.Column="1" Margin="0,25,5,0" FontSize="16"/>
+
+        <ComboBox Name="listKonu" Grid.Row="2" Grid.Column="1" Margin="0,25,5,0" FontSize="16">
+            <ComboBoxItem Content="Seçiniz" IsSelected="True"/>
+            <ComboBoxItem Content="Edebiyat"/>
+            <ComboBoxItem Content="Tarih"/>
+            <ComboBoxItem Content="Felsefe"/>
+            <ComboBoxItem Content="Bilim"/>
+            <ComboBoxItem Content="Arastirma"/>
+        </ComboBox> 
+        <TextBox Name="txtISBN" Grid.Row="4" Grid.Column="1" Margin="0,25,5,0" FontSize="16"/>
+        <Button Name="btnListele" Content="Listele" Grid.Column="0" Grid.Row="5" 
+                FontSize="16" Width="120" Height="40" HorizontalAlignment="Left" 
+                Margin="20,10,0,21" Click="btnListele_Click"
+                Background="LightBlue"/>
+        <Button Name="btnEkle" Content="Ekle" Grid.Row="5"
+                FontSize="16" Width="120" Height="40" HorizontalAlignment="Left" 
+                Margin="232,10,0,21" Click="btnEkle_Click"
+                Background="ForestGreen"/>
+        <Button Name="btnAra" Content="Ara" Grid.Row="5"
+                FontSize="16" Width="120" Height="40" HorizontalAlignment="Left" 
+                Grid.ColumnSpan="2" Margin="442,10,0,21" Click="btnAra_Click"
+                Background="Beige"/>
+        <Button Name="btnSil" Content="Sil" Grid.Column="1" Grid.Row="5"
+                FontSize="16" Width="120" Height="40" Margin="96,10,34,21"
+                Click="btnSil_Click" Background="Red"/>
+        <DataGrid Name="dataGrid" Grid.RowSpan="5" Margin="5,5,5,5"/>
+        <DatePickerTextBox Grid.Row="3" Grid.Column="1" Text="Basım Tarihi" FontSize="16" Height="20" VerticalAlignment="Top" Margin="5,5,5,0"/>
+        <DatePicker Name="date" Grid.Row="3" Grid.Column="1" FontSize="16" Margin="0,25,5,80" Grid.RowSpan="2"/>
+    </Grid>
+</Window>
