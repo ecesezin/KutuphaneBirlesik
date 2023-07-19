@@ -50,6 +50,12 @@
         <Button Name="btnSil" Content="Sil" Grid.Column="1" Grid.Row="5"
                 FontSize="16" Width="120" Height="40" Margin="96,10,34,21"
                 Click="btnSil_Click" Background="Red"/>
+        <Button Name="btnTarihOnce" Grid.Column="1" Grid.Row="3" Height="20" Width="60" 
+                Content="'den önce" VerticalAlignment="Top" Margin="5,6" 
+                Panel.ZIndex="1" Click="btnTarihOnce_Click"/>
+        <Button Name="btnTarihSonra" Grid.Column="1" Grid.Row="3" Height="20" Width="60" 
+                Content="'den sonra" VerticalAlignment="Top" Margin="170,6,20,50" 
+                Panel.ZIndex="1" Click="btnTarihSonra_Click"/>
         <DataGrid Name="dataGrid" Grid.RowSpan="5" Margin="5,5,5,5"/>
         <DatePickerTextBox Grid.Row="3" Grid.Column="1" Text="Basım Tarihi" FontSize="16" Height="20" VerticalAlignment="Top" Margin="5,5,5,0"/>
         <DatePicker Name="date" Grid.Row="3" Grid.Column="1" FontSize="16" Margin="0,25,5,80" Grid.RowSpan="2"/>
