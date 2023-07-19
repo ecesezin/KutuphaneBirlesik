@@ -174,7 +174,9 @@ namespace KutuphaneDeneme1
 
                 DateTime basimTarihi = date.SelectedDate.Value;
 
-                OleDbCommand tarihtenOnce = new OleDbCommand("SELECT* FROM Kitaplar WHERE BasimTarihi < @basimTarihi ORDER BY Kitaplar.ID", conn);
+                OleDbCommand tarihtenOnce = new OleDbCommand("Select Kitaplar.ID, Kitaplar.KitapAdi, Kitaplar.Yazari, Kitaplar.BasimTarihi, " +
+                    "Kitaplar.ISBNnumarasi, Konular.Konu from Kitaplar, Konular WHERE Kitaplar.BasimTarihi < @basimTarihi AND " +
+                    "Kitaplar.Konusu = Konular.ID ORDER BY Kitaplar.ID", conn);
                 tarihtenOnce.Parameters.AddWithValue("@basimTarihi", basimTarihi);
 
                 dataGrid.ItemsSource = tarihtenOnce.ExecuteReader();
@@ -214,6 +216,8 @@ namespace KutuphaneDeneme1
                 search.Parameters.AddWithValue(@KitapAdi, txtName.Text);
                 search.Parameters.AddWithValue(@Yazar, txtAuthor.Text);
                 search.Parameters.AddWithValue("@Konu", intKonu);
+                search.Parameters.AddWithValue("BasimTarihi", date.SelectedDate.Value);
+                
 
                 //search.Parameters.AddWithValue(basimTarihi.ToString(), date.SelectedDate.Value);
                 search.Parameters.AddWithValue(@ISBNnumara, txtISBN.Text);
