@@ -27,31 +27,21 @@ namespace KutuphaneDeneme1
         private void btnEkle_Click(object sender, RoutedEventArgs e)
         {
             Ekle();
-            txtAuthor.Clear();
-            txtISBN.Clear();
-            txtName.Clear();
-            date.SelectedDate = null;
-            //listKonu.Text = "Seciniz";
+            Clear();
+
         }
 
         private void btnAra_Click(object sender, RoutedEventArgs e)
         {
             Ara();
-            txtAuthor.Clear();
-            txtISBN.Clear();
-            txtName.Clear();
-            date.SelectedDate = null;
-            listKonu.Text = "Seciniz";
+            Clear();
+
         }
 
         private void btnSil_Click(object sender, RoutedEventArgs e)
         {
             Sil();
-            txtAuthor.Clear();
-            txtISBN.Clear();
-            txtName.Clear();
-            date.SelectedDate = null;
-            listKonu.Text = "Seciniz";
+            Clear();
             Listele();
         }
 
@@ -181,12 +171,8 @@ namespace KutuphaneDeneme1
 
                 dataGrid.ItemsSource = tarihtenOnce.ExecuteReader();
 
-                txtAuthor.Clear();
-                txtISBN.Clear();
-                txtName.Clear();
-                date.SelectedDate = null;
-                denOnceSelected = false;
-                denSonraSelected = false;
+                Clear();
+
 
             }
             else if (denSonraSelected)
@@ -200,40 +186,58 @@ namespace KutuphaneDeneme1
 
 
                 dataGrid.ItemsSource = tarihtenSonra.ExecuteReader();
-                txtAuthor.Clear();
-                txtISBN.Clear();
-                txtName.Clear();
-                date.SelectedDate = null;
-                denOnceSelected = false;
-                denSonraSelected = false;
+                Clear();
+
             }
             else
             {
+                if (intKonu != 0)
+                {
+                    OleDbCommand search = new OleDbCommand("Select Kitaplar.ID, Kitaplar.KitapAdi, Kitaplar.Yazari, Kitaplar.BasimTarihi, " +
+    "Konular.Konu, Kitaplar.ISBNnumarasi from Kitaplar, Konular where Kitaplar.KitapAdi = @KitapAdi or Kitaplar.Yazari = @Yazar " +
+    "or (Kitaplar.Konusu = @Konu and Kitaplar.Konusu = Konular.ID) or Kitaplar.ISBNnumarasi = @ISBNnumara  ORDER BY Kitaplar.ID", conn);
+                    search.Parameters.AddWithValue(@KitapAdi, txtName.Text);
+                    search.Parameters.AddWithValue(@Yazar, txtAuthor.Text);
+                    search.Parameters.AddWithValue("@Konu", intKonu);
 
-                OleDbCommand search = new OleDbCommand("Select Kitaplar.ID, Kitaplar.KitapAdi, Kitaplar.Yazari, Kitaplar.BasimTarihi, " +
-                    "Kitaplar.ISBNnumarasi, Konular.Konu from Kitaplar, Konular where KitapAdi = @KitapAdi or Yazari = @Yazar " +
-                    "or (Konusu = @Konu and Kitaplar.Konusu = Konular.ID) or ISBNnumarasi = @ISBNnumara  ORDER BY Kitaplar.ID", conn);
-                search.Parameters.AddWithValue(@KitapAdi, txtName.Text);
-                search.Parameters.AddWithValue(@Yazar, txtAuthor.Text);
-                search.Parameters.AddWithValue("@Konu", intKonu);
-                search.Parameters.AddWithValue("BasimTarihi", date.SelectedDate.Value);
-                
+                    //search.Parameters.AddWithValue("@basimTarihi", date.SelectedDate.Value);
+                    //search.Parameters.AddWithValue(basimTarihi.ToString(), date.SelectedDate.Value);
 
-                //search.Parameters.AddWithValue(basimTarihi.ToString(), date.SelectedDate.Value);
-                search.Parameters.AddWithValue(@ISBNnumara, txtISBN.Text);
-                dataGrid.ItemsSource = search.ExecuteReader();
-                txtAuthor.Clear();
-                txtISBN.Clear();
-                txtName.Clear();
-                date.SelectedDate = null;
-                denOnceSelected = false;
-                denSonraSelected = false;
+                    search.Parameters.AddWithValue(@ISBNnumara, txtISBN.Text);
+                    dataGrid.ItemsSource = search.ExecuteReader();
+                    Clear();                
+                }
+                else
+                {
+                    OleDbCommand search = new OleDbCommand("Select Kitaplar.ID, Kitaplar.KitapAdi, Kitaplar.Yazari, Kitaplar.BasimTarihi, Konular.Konu, " +
+    "Kitaplar.ISBNnumarasi from Kitaplar, Konular where (KitapAdi = @KitapAdi or Yazari = @Yazar " +
+    "or ISBNnumarasi = @ISBNnumara) and (Kitaplar.Konusu = Konular.ID)  ORDER BY Kitaplar.ID", conn);
+                    search.Parameters.AddWithValue(@KitapAdi, txtName.Text);
+                    search.Parameters.AddWithValue(@Yazar, txtAuthor.Text);
+                    search.Parameters.AddWithValue(@ISBNnumara, txtISBN.Text);
+
+                    //search.Parameters.AddWithValue("@basimTarihi", date.SelectedDate.Value);
+                    //search.Parameters.AddWithValue(basimTarihi.ToString(), date.SelectedDate.Value);
+
+                    dataGrid.ItemsSource = search.ExecuteReader();
+
+                    Clear();
+                }
+
             }
-
-
-
         }
 
+
+        public void Clear()
+        {
+            txtAuthor.Clear();
+            txtISBN.Clear();
+            txtName.Clear();
+            date.SelectedDate = null;
+            listKonu.SelectedIndex = 0;
+            denOnceSelected = false;
+            denSonraSelected = false;
+        }
 
         //Silme metodu
         public void Sil()
